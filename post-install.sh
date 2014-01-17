@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod +x /usr/bin/statusfile-writer
+chmod +x /usr/bin/statusfile_writer
