@@ -6,6 +6,7 @@ Created on 17.01.2014
 import unittest
 from statusfile_writer.statusfile import StatusFile
 from mock import patch, Mock, call, mock_open
+import logging
 
 class StatusFileTest(unittest.TestCase):
 
@@ -14,6 +15,7 @@ class StatusFileTest(unittest.TestCase):
     
 
     def setUp(self):
+        logging.basicConfig(level=logging.INFO, format='%(message)s')
         self.statusfile = StatusFile("/tmp/statusfile.status")
         self.patcher = patch('statusfile_writer.statusfile.open',
                              mock_open(),

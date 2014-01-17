@@ -10,16 +10,16 @@ use_plugin("python.coverage")
 authors = [Author('Marco Hoyer', 'marco.hoyer@immobilienscout24.de')]
 description = """statusfile-writer - simple helper to generate json status files exported by httpd
 
-for more documentation, visit https://github.com/marco-hoyer/statusfile
+for more documentation, visit https://github.com/marco-hoyer/statusfile-writer
 """
 
 name = 'statusfile-writer'
 license = 'GNU GPL v3'
 summary = 'statusfile-writer - simple helper to generate json status files exported by httpd'
-url = 'https://github.com/marco-hoyer/statusfile'
+url = 'https://github.com/marco-hoyer/statusfile-writer'
 version = '1.0'
 
-default_task = ['verify']
+default_task = ['publish']
 
 @init
 def initialize(project):
@@ -27,7 +27,11 @@ def initialize(project):
     project.depends_on("argparse")
 
     project.set_property('copy_resources_target', '$dir_dist')
+    project.get_property('copy_resources_glob').append('setup.cfg')
+    project.get_property('copy_resources_glob').append('post-install.sh')
     project.set_property('dir_dist_scripts', 'scripts')
+    
+    project.install_file('/usr/bin/', 'statusfile_writer/statusfile_writer')
 
     project.set_property('distutils_classifiers', [
         'Development Status :: 4 - Beta',

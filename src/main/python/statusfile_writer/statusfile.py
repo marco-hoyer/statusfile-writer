@@ -14,7 +14,8 @@ import sys
 class StatusFile:
     
     def __init__(self, status_file):
-        self.logger = logging.getLogger(__name__)
+        logging.basicConfig(level=logging.INFO, format='%(message)s')
+        self.logger = logging.getLogger("Statusfile-Writer")
         self.status_file = status_file
 
     def _generate_status_json(self, status_code, message):
