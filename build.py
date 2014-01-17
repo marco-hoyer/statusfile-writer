@@ -23,12 +23,11 @@ default_task = ['verify']
 
 @init
 def initialize(project):
+    
+    project.depends_on("argparse")
 
     project.set_property('copy_resources_target', '$dir_dist')
     project.set_property('dir_dist_scripts', 'scripts')
-
-    project.install_file('/etc/metricd/', 'metricd/metricd.conf.sample')
-    project.install_file('/etc/init.d/', 'metricd/metricd')
 
     project.set_property('distutils_classifiers', [
         'Development Status :: 4 - Beta',
