@@ -25,17 +25,27 @@ pyb publish
 
 ## Usage:
 
-### Help
+### Shell
+
+#### Help
 ```bash
 python statusfile_tests.py --help
 ```
 
-###  Write status file
+####  Write status file
 ```bash
 python statusfile_tests.py /var/www/status/mycronjob-status.json 0 "Successfully resized 1000 files"
 ```
 
-#### Example output
+### As python module
+```python
+from statusfile_writer.statusfile import StatusFile
+
+statusfile = StatusFile("/var/www/status/myapp-status.json")
+statusfile.write(2,"Fatal error occured")
+```
+
+## Example output:
 ```json
 {
   "status": 0,
@@ -43,7 +53,7 @@ python statusfile_tests.py /var/www/status/mycronjob-status.json 0 "Successfully
 }
 ```
 
-### Status Codes
+## Status Codes:
 
 0 - OK<br>
 1 - Warning<br>
