@@ -4,7 +4,7 @@ Created on 17.01.2014
 @author: mhoyer
 '''
 import unittest
-from statusfile import StatusFile
+from statusfile_writer.statusfile import StatusFile
 from mock import patch, Mock, call, mock_open
 
 class StatusFileTest(unittest.TestCase):
@@ -15,7 +15,7 @@ class StatusFileTest(unittest.TestCase):
 
     def setUp(self):
         self.statusfile = StatusFile("/tmp/statusfile.status")
-        self.patcher = patch('statusfile.open',
+        self.patcher = patch('statusfile_writer.statusfile.open',
                              mock_open(),
                              create=True)
         self.mock_open_ = self.patcher.start()
@@ -30,19 +30,19 @@ class StatusFileTest(unittest.TestCase):
         self.assertEqual(expected, received)
         
     def test__write_puts_json_to_file(self):
-        with patch('statusfile.StatusFile._generate_status_json') as mock_generate_status_json:
-            with patch('statusfile.StatusFile._write_to_status_file') as mock_write_json:
+        with patch('statusfile_writer.statusfile.StatusFile._generate_status_json') as mock_generate_status_json:
+            with patch('statusfile_writer.statusfile.StatusFile._write_to_status_file') as mock_write_json:
                 mock_generate_status_json.return_value = 'json'
                 self.statusfile.write(0, self.MSG)
                 mock_write_json.assert_called_once_with('json')
  
     def test__write_json_to_file_opens_correct_file(self):
-        with patch('statusfile.open', mock_open(), create=True) as mock_open_:
+        with patch('statusfile_writer.statusfile.open', mock_open(), create=True) as mock_open_:
             self.statusfile._write_to_status_file('json')
             mock_open_.assert_called_once_with(self.statusfile.status_file, 'w')
 
     def test_json_will_be_written_to_file(self):
-        with patch('statusfile.open', mock_open(), create=True) as mock_open_:
+        with patch('statusfile_writer.statusfile.open', mock_open(), create=True) as mock_open_:
             self.statusfile._write_to_status_file('json')
             mock_open_.return_value.write.assert_called_once_with('json')
             
