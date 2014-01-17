@@ -8,14 +8,14 @@ use_plugin('copy_resources')
 use_plugin("python.coverage")
 
 authors = [Author('Marco Hoyer', 'marco.hoyer@immobilienscout24.de')]
-description = """statusfile - simple helper to generate json status files exported by httpd
+description = """statusfile-writer - simple helper to generate json status files exported by httpd
 
 for more documentation, visit https://github.com/marco-hoyer/statusfile
 """
 
-name = 'statusfile'
+name = 'statusfile-writer'
 license = 'GNU GPL v3'
-summary = 'statusfile - simple helper to generate json status files exported by httpd'
+summary = 'statusfile-writer - simple helper to generate json status files exported by httpd'
 url = 'https://github.com/marco-hoyer/statusfile'
 version = '1.0'
 
