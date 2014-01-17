@@ -8,17 +8,17 @@ Simple python sniplet writing a status file parseable by check_remote_json and c
 This is a bybuilder project. You will need to install pybuilder by:
 pip install pybuilder
 
-### verify project (unittests and coverage)
+### Verify project (unittests and coverage)
 ```bash
 pyb verify
 ```
 
-### install project dependencies
+### Install project dependencies
 ```bash
 pyb install_dependencies
 ```
 
-### build project
+### Build project
 ```bash
 pyb publish
 ```
@@ -30,16 +30,24 @@ pyb publish
 python statusfile_tests.py --help
 ```
 
-###  write status file
+###  Write status file
 ```bash
 python statusfile_tests.py /var/www/status/mycronjob-status.json 0 "Successfully resized 1000 files"
 ```
 
+#### Example output
+```json
+{
+  "status": 0,
+  "message": "Successfully resized 1000 files"
+}
+```
+
 ### Status Codes
 
-0 - OK
-1 - Warning
-2 - Critical
-3 - Unknown
+0 - OK<br>
+1 - Warning<br>
+2 - Critical<br>
+3 - Unknown<br>
 
 (see: http://www.nagios-plugins.org/doc/guidelines.html)
