@@ -21,9 +21,11 @@ version = '1.0'
 
 default_task = ['publish']
 
+
 @init
 def initialize(project):
 
+    project.build_depends_on("mock")
     project.depends_on("argparse")
 
     project.set_property('copy_resources_target', '$dir_dist')
