@@ -23,15 +23,13 @@ default_task = ['publish']
 
 @init
 def initialize(project):
-    
+
     project.depends_on("argparse")
 
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('setup.cfg')
     project.get_property('copy_resources_glob').append('post-install.sh')
     project.set_property('dir_dist_scripts', 'scripts')
-    
-    project.install_file('/usr/bin/', 'statusfile_writer/statusfile_writer')
 
     project.set_property('distutils_classifiers', [
         'Development Status :: 4 - Beta',
