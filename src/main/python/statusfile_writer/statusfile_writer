@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# shell wrapper for statusfile-writer python modile
-python /usr/lib/python2.6/site-packages/statusfile_writer/statusfile.py "$@"
