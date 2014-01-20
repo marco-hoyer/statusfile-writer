@@ -61,11 +61,11 @@ class StatusFileTest(unittest.TestCase):
          
     def test_create_statusfile_path(self):
         test_values = [
-            ('','testfile.status','testfile.status'),
-            (None,'testfile.status','testfile.status'),
-            ('/var/www/status','testfile.status','/var/www/status/testfile.status'),
-            ('/var/www/status/','testfile.status','/var/www/status/testfile.status'),
-            ('/var/www/status/','/tmp/testfile.status','/tmp/testfile.status')
+            ('', 'testfile.status', 'testfile.status'),
+            (None, 'testfile.status', 'testfile.status'),
+            ('/var/www/status', 'testfile.status', '/var/www/status/testfile.status'),
+            ('/var/www/status/', 'testfile.status', '/var/www/status/testfile.status'),
+            ('/var/www/status/', '/tmp/testfile.status', '/tmp/testfile.status')
         ]
         for directory, filename, expected_path in test_values:
             path = self.statusfile._create_statusfile_path(directory, filename)
@@ -77,22 +77,22 @@ class StatusFileTest(unittest.TestCase):
             mock_open_.assert_called_once_with(self.statusfile.STATUSFILE_DIRECTORY_SYSCONFIG, 'r')
             
     def test__read_statusfile_directory_from_sysconfig(self):
-        self.mock_open_.return_value.readlines.return_value = ['STATUSFILE_PATH=/any',]
+        self.mock_open_.return_value.readlines.return_value = ['STATUSFILE_PATH=/any']
         actual_path = self.statusfile._read_statusfile_directory_from_sysconfig()
         self.assertEqual('/any',  actual_path)
         
     def test__read_statusfile_directory_should_return_empty_value_if_there_is_invalid_config(self):
-        self.mock_open_.return_value.readlines.return_value = ['STATUSFILE_PATH',]
+        self.mock_open_.return_value.readlines.return_value = ['STATUSFILE_PATH']
         actual_path = self.statusfile._read_statusfile_directory_from_sysconfig()
         self.assertEqual('',  actual_path)
         
     def test__read_statusfile_directory_should_return_empty_value_if_there_is_no_value(self):
-        self.mock_open_.return_value.readlines.return_value = ['STATUSFILE_PATH=',]
+        self.mock_open_.return_value.readlines.return_value = ['STATUSFILE_PATH=']
         actual_path = self.statusfile._read_statusfile_directory_from_sysconfig()
         self.assertEqual('',  actual_path)
 
     def test__read_statusfile_directory_should_return_empty_value_if_there_is_no_key(self):
-        self.mock_open_.return_value.readlines.return_value = ['KEY=VALUE',]
+        self.mock_open_.return_value.readlines.return_value = ['KEY=VALUE']
         actual_path = self.statusfile._read_statusfile_directory_from_sysconfig()
         self.assertEqual('',  actual_path)
         
@@ -100,6 +100,11 @@ class StatusFileTest(unittest.TestCase):
         self.mock_open_.side_effect = IOError("unittest exception")
         actual_path = self.statusfile._read_statusfile_directory_from_sysconfig()
         self.assertEqual('',  actual_path)
-        
+
+    def test__read_statusfile_directory_should_ignore_lines_with_comments(self):
+        self.mock_open_.return_value.readlines.return_value = ['# line with comment', 'STATUSFILE_PATH=/tmp']
+        actual_path = self.statusfile._read_statusfile_directory_from_sysconfig()
+        self.assertEqual('/tmp',  actual_path)
+
 if __name__ == "__main__":
     unittest.main()
