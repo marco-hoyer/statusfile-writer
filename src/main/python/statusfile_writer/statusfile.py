@@ -20,7 +20,6 @@ class StatusFile:
         logging.basicConfig(level=logging.INFO, format='%(message)s')
         self.logger = logging.getLogger("Statusfile-Writer")
         statusfile_dir = self._read_statusfile_directory_from_sysconfig()
-
         self.status_file = statusfile_dir + status_file
         
     def _create_statusfile_path(self, directory, filename):
@@ -67,16 +66,21 @@ class StatusFile:
             return True
         else:
             return False
-    
+
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('statusfile', help="Path to write the status file to", type=str)
-    parser.add_argument('statuscode', help="Path to write the status file to", type=int)
+    parser.add_argument('statuscode', help="Nagios/Icinga plugin exit code", type=int)
     parser.add_argument('message', help="Message", type=str)
     return parser.parse_args()
 
-if __name__ == '__main__':
+
+def main():
     args = parse_arguments()
     # executed by shell
     statusfile = StatusFile(args.statusfile)
     statusfile.write(args.statuscode, args.message)
+
+
+if __name__ == '__main__':
+    main()
