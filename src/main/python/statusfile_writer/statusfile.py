@@ -49,7 +49,7 @@ class StatusFile:
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('statusfile', help="Path to write the status file to", type=str)
-    parser.add_argument('statuscode', help="Path to write the status file to", type=int)
+    parser.add_argument('statuscode', help="Nagios/Icinga plugin exit code", type=int)
     parser.add_argument('message', help="Message", type=str)
     return parser.parse_args()
 
