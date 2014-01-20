@@ -13,10 +13,32 @@ import sys
 
 class StatusFile:
     
+    STATUSFILE_DIRECTORY_SYSCONFIG = "/etc/sysconfig/statusfile-writer"
+    KEY_STATUSFILE_PATH = 'STATUSFILE_PATH'
+    
     def __init__(self, status_file):
         logging.basicConfig(level=logging.INFO, format='%(message)s')
         self.logger = logging.getLogger("Statusfile-Writer")
-        self.status_file = status_file
+        statusfile_dir = self._read_statusfile_directory_from_sysconfig()
+
+        self.status_file = statusfile_dir + status_file
+        
+    def _create_statusfile_path(self, directory, filename):
+        path = "" if not directory else directory
+        path = path + "/" if path and not path.endswith("/") else path
+        path = filename if filename.startswith("/") else path + filename
+        return path
+        
+    def _read_statusfile_directory_from_sysconfig(self):
+        try:
+            with open(self.STATUSFILE_DIRECTORY_SYSCONFIG, 'r') as f:
+                for line in f.readlines():
+                    k, v = line.split('=')
+                    if k.strip() == self.KEY_STATUSFILE_PATH:
+                        return v.strip()
+        except (IOError, ValueError):
+            pass
+        return ""
 
     def _generate_status_json(self, status_code, message):
         status_dict = {}
