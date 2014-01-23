@@ -11,6 +11,8 @@ import json
 import logging
 import os
 import sys
+import time
+
 
 class StatusFile:
     
@@ -48,10 +50,8 @@ class StatusFile:
 
         return statusfile_directory
 
-    def _generate_status_json(self, status_code, message):
-        status_dict = {}
-        status_dict['status'] = status_code
-        status_dict['message'] = message
+    def _generate_status_json(self, status_code, message, timestamp):
+        status_dict = {'status': status_code, 'message': message, 'timestamp': timestamp}
         return json.dumps(status_dict, indent=2)
 
     def _write_to_status_file(self, json):
@@ -64,7 +64,7 @@ class StatusFile:
 
     def write(self, status_code, message):
         if self._status_code_is_valid(status_code):
-            status_json = self._generate_status_json(status_code, message)
+            status_json = self._generate_status_json(status_code, message, time.time())
             self._write_to_status_file(status_json)
         else:
             self.logger.error("Invalid status_code, use 0,1,2,3 as defined in icinga/nagios plugin api!")
