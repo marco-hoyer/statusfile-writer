@@ -49,6 +49,7 @@ statusfile.write(2,"Fatal error occured")
 ```json
 {
   "status": 0,
+  "timestamp": 1390501647
   "message": "Successfully resized 1000 files"
 }
 ```
