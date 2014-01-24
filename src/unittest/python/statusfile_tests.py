@@ -12,6 +12,7 @@ class StatusFileTest(unittest.TestCase):
 
     MSG = 'msg'
     ERROR_CODE = 42
+    TIMESTAMP = 1234567890
     
 
     def setUp(self):
@@ -26,11 +27,11 @@ class StatusFileTest(unittest.TestCase):
         self.patcher.stop()
 
     def test_generate_status_json(self):
-        expected = '{\n  "status": %s, \n  "message": "%s"\n}' % \
-                (self.ERROR_CODE, self.MSG)
-        received = self.statusfile._generate_status_json(self.ERROR_CODE, self.MSG)
+        expected = '{\n  "status": %s, \n  "timestamp": %s, \n  "message": "%s"\n}' % \
+                (self.ERROR_CODE, self.TIMESTAMP, self.MSG)
+        received = self.statusfile._generate_status_json(self.ERROR_CODE, self.MSG, self.TIMESTAMP)
         self.assertEqual(expected, received)
-         
+
     def test__write_puts_json_to_file(self):
         with patch('statusfile_writer.statusfile.StatusFile._generate_status_json') as mock_generate_status_json:
             with patch('statusfile_writer.statusfile.StatusFile._write_to_status_file') as mock_write_json:
