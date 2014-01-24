@@ -64,7 +64,7 @@ class StatusFile:
 
     def write(self, status_code, message):
         if self._status_code_is_valid(status_code):
-            status_json = self._generate_status_json(status_code, message, time.time())
+            status_json = self._generate_status_json(status_code, message, int(time.time()))
             self._write_to_status_file(status_json)
         else:
             self.logger.error("Invalid status_code, use 0,1,2,3 as defined in icinga/nagios plugin api!")
